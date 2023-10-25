@@ -7,21 +7,36 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@portabletext/react": "^3.0.11",
     "@remix-run/node": "^1.15.0",
     "@remix-run/react": "^1.15.0",
+    "@sanity/client": "^6.7.0",
+    "@sanity/color-input": "^3.1.0",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "^3.18.1",
     "@vercel/remix": "1.15.0",
     "framer-motion": "^10.11.2",
+    "groq": "^3.18.1",
     "isbot": "^3.6.8",
+    "lucide-react": "^0.289.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sanity": "^3.18.1",
+    "sanity-plugin-media": "^2.2.2",
+    "sanity-plugin-prefixed-slug": "^2.0.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.15.0",
     "@remix-run/eslint-config": "^1.15.0",
     "@remix-run/serve": "^1.15.0",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.6",
+    "@tailwindcss/typography": "^0.5.10",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "eslint": "^8.38.0",
+    "tailwindcss": "^3.3.5",
     "typescript": "^5.0.4"
   },
   "engines": {

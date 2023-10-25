@@ -62,7 +62,7 @@ export default function App() {
           </div>
         </div>
       </main>
-
+		<div className='bg-red-500'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro corrupti aperiam soluta optio incidunt voluptatibus suscipit, ut sequi adipisci quis sapiente voluptas, impedit earum esse dolores possimus nobis est vel laborum dolore accusantium fugit quos? Ipsum voluptates magni culpa sed.</div>
       <Footer>
         <p>
           Generated at {date} <span data-break /> ({isCold ? "cold" : "hot"}) by{" "}
