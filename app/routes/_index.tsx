@@ -1,19 +1,19 @@
 import { Suspense } from 'react';
+import type { DataFunctionArgs} from '@vercel/remix';
 import { defer } from '@vercel/remix';
-import type { LoaderArgs } from '@vercel/remix';
 import { Await, useLoaderData } from '@remix-run/react';
 
 import { Footer } from '~/components/footer';
 import { Region } from '~/components/region';
-import { Illustration } from '~/components/illustration';
 import { parseVercelId } from '~/parse-vercel-id';
+import { Layout } from '~/components/Layout';
 
 export const config = { runtime: 'edge' };
 
 let isCold = true;
 let initialDate = Date.now();
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: DataFunctionArgs) {
   const wasCold = isCold;
   isCold = false;
 
@@ -40,41 +40,8 @@ export function headers() {
 export default function App() {
   const { proxyRegion, computeRegion, isCold, date } = useLoaderData<typeof loader>();
   return (
-    <>
-      <main>
-        <Illustration />
-        <div className="meta">
-          <div className="info">
-            <span>Proxy Region</span>
-            <Suspense fallback={<strong>Loading...</strong>}>
-              <Await resolve={proxyRegion}>
-                {(region) => <Region region={region} />}
-              </Await>
-            </Suspense>
-          </div>
-          <div className="info">
-            <span>Compute Region</span>
-            <Suspense fallback={<strong>Loading...</strong>}>
-              <Await resolve={computeRegion}>
-                {(region) => <Region region={region} />}
-              </Await>
-            </Suspense>
-          </div>
-        </div>
-      </main>
-		<div className='bg-red-500'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro corrupti aperiam soluta optio incidunt voluptatibus suscipit, ut sequi adipisci quis sapiente voluptas, impedit earum esse dolores possimus nobis est vel laborum dolore accusantium fugit quos? Ipsum voluptates magni culpa sed.</div>
-      <Footer>
-        <p>
-          Generated at {date} <span data-break /> ({isCold ? "cold" : "hot"}) by{" "}
-          <a
-            href="https://vercel.com/docs/concepts/functions/edge-functions"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Vercel Edge Runtime
-          </a>
-        </p>
-      </Footer>
-    </>
+   <Layout>
+			<h1>test from the layout</h1>
+	 </Layout>
   );
 }

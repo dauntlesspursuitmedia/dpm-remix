@@ -16,10 +16,9 @@ module.exports = {
       },
       fontFamily: {
         sans: [
-          "var(--font-inter)", ...fontFamily.sans
+          "Inter Variable", ...fontFamily.sans
         ],
-				logo: ["var(--font-logo)"],
-				body: ["var(--font-nunito)", ...fontFamily.serif]
+				body: ["Nunito Variable", ...fontFamily.serif]
       },
 
     },
