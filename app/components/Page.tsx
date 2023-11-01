@@ -139,10 +139,10 @@ export const Page = ({ modules }: { modules: PageDoc["modules"] }) => {
       {modules?.map((module, idx) => {
         const Component = lookup[module._type];
 
-        if (hasKey(module)) {
+        if (module?._key) {
           return (
             <Suspense key={module._key} fallback={<div>Loading...</div>}>
-              <Component  {...module} />
+              <Component {...module} />
             </Suspense>
           );
         }

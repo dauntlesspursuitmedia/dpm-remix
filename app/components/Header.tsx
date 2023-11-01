@@ -13,9 +13,9 @@ export const Header = ({
   const { pathname } = useLocation();
 
   return (
-    <header className={`container mx-auto px-8 "relative"}`}>
+    <header className={`container mx-auto px-8 relative`}>
       <div className="py-8 flex justify-between items-center gap-16">
-        <Link to="/">
+        <Link to="/" prefetch="intent">
           <img src="/letter-logo.svg" alt="logo" width={200} />
         </Link>
         <nav className=" gap-8  hidden md:flex">

@@ -1,11 +1,12 @@
-"use client";
-import { normalizePath } from "@/lib/getUrlPath";
-import { SiteConfigDoc } from "@/types/siteConfig";
+
 import { FacebookIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+// import Image from "next/image";
+// import Link from "next/link";
 import { MenuItem } from "./menus/MenuItem";
-import { usePathname } from "next/navigation";
+import type { SiteConfigDoc } from "types/siteConfig";
+import { NavLink, useLocation } from "@remix-run/react";
+import { normalizePath } from "~/lib/getUrlPath";
+// import { usePathname } from "next/navigation";
 
 const SocialIcons = {
   facebook: <FacebookIcon className="w-24" />,
@@ -20,18 +21,17 @@ export const Footer = ({
   socials?: SiteConfigDoc["socialLinks"];
   navigation: SiteConfigDoc["mainNavigation"];
 }) => {
-  const pathname = usePathname();
+  const {pathname} = useLocation();
   return (
-    <footer className="bg-black/30 text-white grid gap-4">
+    <footer className="bg-black text-white grid gap-4">
       <div className="py-16 container mx-auto flex flex-wrap justify-center md:justify-between items-center gap-8 px-8">
-        <Image
+        <img
           className="max-w-[200px]"
           src={"/logo-mark.svg"}
           alt="Logo"
           width={200}
           height={200}
-          loading="eager"
-          layout="responsive"
+          loading="lazy"
         />
         <nav className="flex gap-8 flex-wrap">
           {navigation?.map((item) => {
@@ -60,18 +60,16 @@ export const Footer = ({
       <div className="flex justify-between px-8 mx-auto container">
         <div className="flex gap-4">
           {privacyNav?.map((item) => {
-            const isActive =
-              pathname.startsWith(normalizePath(item?.item?.slug || "")) &&
-              item?.item?.slug !== "/";
-            return (
-              <Link
 
-                className={`text-xs ${isActive ? "text-red-400" : "text-white"}`}
+            return (
+              <NavLink
+
+                className={({isActive}) => `text-xs ${isActive ? "text-red-400" : "text-white"}`}
                 key={item?._key}
-                href={normalizePath(item?.item?.slug || "")}
+                to={normalizePath(item?.item?.slug || "")}
               >
                 {item?.item?.title}
-              </Link>
+              </NavLink>
             );
           })}
         </div>

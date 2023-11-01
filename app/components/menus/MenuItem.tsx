@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@remix-run/react";
+import { Link, NavLink, useLocation } from "@remix-run/react";
 import { DropdownMenu } from "./DropdownMenu";
 import type { DropdownState, MenuItems } from "./Menu";
 import { normalizePath } from "~/lib/getUrlPath";
@@ -23,12 +23,12 @@ export const MenuItem = ({
           {itemName}
         </a>
       ) : (
-        <Link
-          className={isActive ? "text-red-400" : ""}
+        <NavLink
+          className={({isActive}) => isActive ?  "text-red-400" : ""}
           to={normalizePath(navItem.item?.slug || "")}
         >
           {itemName && itemName !== "" ? itemName : item?.title}
-        </Link>
+        </NavLink>
       )}
       {nestedRoutes && nestedRoutes?.length > 0 && (
         <DropdownMenu id={_key} parent={item?.slug} items={nestedRoutes} />

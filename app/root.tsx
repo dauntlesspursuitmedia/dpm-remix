@@ -16,7 +16,7 @@ import {
   ScrollRestoration,
   useLoaderData,
   useLocation,
-	useOutlet,
+  useOutlet,
 } from "@remix-run/react";
 import mainCss from "~/styles/main.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
@@ -29,6 +29,7 @@ import { Header } from "./components/Header";
 import { Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Skeleton } from "./components/Skeleton";
+import { Footer } from "./components/Footer";
 
 export function loader({ request }: DataFunctionArgs) {
   const data = client
@@ -125,7 +126,7 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
-	const outlet = useOutlet()
+  const outlet = useOutlet();
   const { data } = useLoaderData<typeof loader>();
   const location = useLocation();
   return (
@@ -135,13 +136,29 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex flex-col min-h-screen ">
         <AnimatePresence initial={false} mode="wait">
+          <Suspense fallback={<Skeleton />}>
+            <Await resolve={data}>
+              {(data) => {
+                if (location.pathname === "/") return null;
+                return <Header navigation={data?.mainNavigation} />;
+              }}
+            </Await>
+            {/* {location.pathname !== "/" && (
+              <Header navigation={data?.mainNagivation} />
+            )} */}
+          </Suspense>
+          {outlet}
           <Suspense fallback={<Skeleton />}>
             <Await resolve={data}>
               {(data) => (
                 <>
-                  <Header navigation={data?.mainNavigation} />
+                  <Footer
+                    privacyNav={data?.privacyNavigation}
+                    socials={data?.socialLinks}
+                    navigation={data?.mainNavigation}
+                  />
                 </>
               )}
             </Await>
@@ -149,9 +166,6 @@ export default function App() {
               <Header navigation={data?.mainNagivation} />
             )} */}
           </Suspense>
-          <NavLink to="/test">Test</NavLink>
-          <NavLink to="/">home</NavLink>
-					{outlet}
           {/* <Outlet /> */}
         </AnimatePresence>
         <ScrollRestoration />
