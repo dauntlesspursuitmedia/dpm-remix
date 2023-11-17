@@ -1,8 +1,9 @@
-"use client"
 export const ContactForm = () => {
-	return (
-		<form>
-			<h4>Contact us</h4>
-		</form>
-	)
-}
+  return (
+    <section>
+      <form>
+        <h2>Contact us</h2>
+      </form>
+    </section>
+  );
+};

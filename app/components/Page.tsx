@@ -6,10 +6,11 @@ import { ColumnsQuery } from "./modules/Columns";
 import { CtaSectionQuery } from "./modules/CtaSection";
 import { RichTextQuery } from "./modules/RichText";
 import { TextWithImageQuery } from "./modules/TextWithImage";
-import { UiComponentQuery } from "./modules/UiComponentRef";
+import { UiComponentQuery, UiComponentRef } from "./modules/UiComponentRef";
 import groq from "groq";
 import { JsonPreview } from "./JsonPreview";
 import React, { Suspense } from "react";
+import { ImageQuery } from "~/lib/misc";
 
 export const HeroSectionQuery = groq`
 	_type == "hero" => {
@@ -18,15 +19,7 @@ export const HeroSectionQuery = groq`
 		heros[] {
 			title,
 			image {
-				asset->{
-					_ref,
-					_id,
-					assetId,
-					metadata {
-						lqip
-					}
-				},
-
+       ${ImageQuery}
 			},
 			action {
 				actionTitle,
@@ -123,14 +116,14 @@ const lookup = {
       default: Component,
     };
   }),
-  uiComponentRef: React.lazy(async () => {
+  uiComponentRef: UiComponentRef /* React.lazy(async () => {
     const { UiComponentRef: Component } = await import(
       "~/components/modules/UiComponentRef"
     );
     return {
       default: Component,
     };
-  }),
+  }), */
 } as const;
 
 export const Page = ({ modules }: { modules: PageDoc["modules"] }) => {
@@ -141,8 +134,8 @@ export const Page = ({ modules }: { modules: PageDoc["modules"] }) => {
 
         if (module?._key) {
           return (
-            <Suspense key={module._key} fallback={<div>Loading...</div>}>
-              <Component {...module} />
+            <Suspense key={idx} fallback={<div>Loading...</div>}>
+              <Component  {...module} />
             </Suspense>
           );
         }

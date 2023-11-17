@@ -1,32 +1,51 @@
 import { json } from "@remix-run/node";
 import groq from "groq";
 import { brandsZ } from "types/brand";
+import { projectZ } from "types/project";
+import { serviceZ } from "types/service";
+import { z } from "zod";
 import { ImageQuery } from "~/lib/misc";
 import { client } from "~/sanity.server";
 
 export const config = { runtime: "edge" };
-
 export const loader = async () => {
-  const brands = await client
+  const projects = await client
     .fetch(
-      groq`*[_type == "brand"]{
+      groq`*[_type == "project"]{
 		_id,
 		_type,
 		title,
 		"slug":slug.current,
-		description[],
-		logo {
+		author->{
+			_id,
+			_type,
+			name,
+			"slug":slug.current,
+			image {
+				${ImageQuery}
+			}
+		},
+		mainImage {
 			${ImageQuery}
-		}	}`
+		},
+		categories[]->{
+			_id,
+			_type,
+			title,
+			"slug":slug.current,
+		},
+		body,
+		excerpt
+		}`
     )
-    .then((res) => (res ? brandsZ.parse(res) : null));
+    .then((res) => (res ? z.array(projectZ).parse(res) : null));
 
-  if (!brands) {
-    throw new Response("No brands found...", { status: 404 });
+  if (!projects) {
+    throw new Response("No projects found...", { status: 404 });
   }
 
   return json(
-    { brands },
+    {  projects },
     {
       headers: {
         "Cache-Control":

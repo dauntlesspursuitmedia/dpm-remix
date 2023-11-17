@@ -18,10 +18,9 @@ import {
   useLocation,
   useOutlet,
 } from "@remix-run/react";
-import mainCss from "~/styles/main.css";
-import { cssBundleHref } from "@remix-run/css-bundle";
-import inter from "@fontsource-variable/inter/slnt.css";
-import nunito from "@fontsource-variable/nunito/wght-italic.css";
+// import mainCss from "~/styles/main.css";
+// import inter from "@fontsource-variable/inter/slnt.css";
+// import nunito from "@fontsource-variable/nunito/wght-italic.css";
 import { client } from "./sanity.server";
 import groq from "groq";
 import { siteConfigNoFrontPage } from "types/siteConfig";
@@ -30,6 +29,10 @@ import { Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Skeleton } from "./components/Skeleton";
 import { Footer } from "./components/Footer";
+
+import "~/styles/main.css"
+import "@fontsource-variable/inter/slnt.css"
+import "@fontsource-variable/nunito/wght-italic.css"
 
 export function loader({ request }: DataFunctionArgs) {
   const data = client
@@ -112,18 +115,7 @@ export const meta: MetaFunction<typeof loader> = ({ data: { host } }) => [
   },
 ];
 
-export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-  { rel: "stylesheet", href: mainCss },
-  {
-    rel: "stylesheet",
-    href: inter,
-  },
-  {
-    rel: "stylesheet",
-    href: nunito,
-  },
-];
+
 
 export default function App() {
   const outlet = useOutlet();
@@ -137,12 +129,12 @@ export default function App() {
         <Links />
       </head>
       <body className="flex flex-col min-h-screen ">
-        <AnimatePresence initial={false} mode="wait">
+        <AnimatePresence initial={false}>
           <Suspense fallback={<Skeleton />}>
             <Await resolve={data}>
               {(data) => {
                 if (location.pathname === "/") return null;
-                return <Header navigation={data?.mainNavigation} />;
+                return <Header navigation={data?.mainNavigation || []} />;
               }}
             </Await>
             {/* {location.pathname !== "/" && (
@@ -157,20 +149,16 @@ export default function App() {
                   <Footer
                     privacyNav={data?.privacyNavigation}
                     socials={data?.socialLinks}
-                    navigation={data?.mainNavigation}
+                    navigation={data?.mainNavigation || []}
                   />
                 </>
               )}
             </Await>
-            {/* {location.pathname !== "/" && (
-              <Header navigation={data?.mainNagivation} />
-            )} */}
           </Suspense>
-          {/* <Outlet /> */}
         </AnimatePresence>
         <ScrollRestoration />
-        <Scripts />
         <LiveReload />
+        <Scripts />
       </body>
     </html>
   );

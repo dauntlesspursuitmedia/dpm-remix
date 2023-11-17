@@ -1,6 +1,8 @@
 import groq from "groq";
 import React, { Suspense } from "react";
 import { z } from "zod";
+import { BrandList } from "../widgets/BrandList";
+
 
 export const uiComponentRefPropsZ = z.object({
   _type: z.literal("uiComponentRef"),
@@ -12,6 +14,7 @@ export const uiComponentRefPropsZ = z.object({
       "serviceList",
       "projectList",
       "proposalRequestForm",
+			"calBooking",
     ])
     .default("contactForm"),
   _key: z.string(),
@@ -27,15 +30,16 @@ export const UiComponentQuery = groq`
 export type UIComponentProps = z.infer<typeof uiComponentRefPropsZ>;
 
 const uiComponentLookup = {
-  brandList: React.lazy(async () => {
-    const { BrandList: Component } = await import(
-      "~/components/widgets/BrandList"
-    );
-    return { default: Component };
-  }),
+  brandList: BrandList ,
   contactForm: React.lazy(async () => {
     const { ContactForm: Component } = await import(
       "~/components/widgets/ContactForm"
+    );
+    return { default: Component };
+  }),
+  calBooking: React.lazy(async () => {
+    const { CalBookingWidget: Component } = await import(
+      "~/components/widgets/CalBookingWidget"
     );
     return { default: Component };
   }),

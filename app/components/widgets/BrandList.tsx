@@ -8,7 +8,7 @@ export const BrandList = () => {
   const brandFetcher = useFetcher<{ brands: BrandDoc[] }>();
 
   useEffect(() => {
-    if (brandFetcher.type === "init") {
+    if (brandFetcher.state === "idle" && brandFetcher.data == null) {
       brandFetcher.load("/resources/brands");
     }
   }, [brandFetcher]);
@@ -21,18 +21,19 @@ export const BrandList = () => {
       <ul className="flex gap-16  object-contain items-center flex-wrap justify-center">
         {brands?.map(({ title, logo, slug }) => {
           const isOpaque = logo?.asset?.metadata?.isOpaque;
-          console.log(isOpaque);
+
+					// if(!logo) return null
           return (
             <li
               key={slug}
-              className="flex gap-16  object-contain items-center flex-wrap justify-center"
+              className="flex gap-16 w-48 object-contain items-center flex-wrap justify-center"
             >
               {/* <JsonPreview {...logo} /> */}
               <SanityImage
-                value={logo}
+                value={logo }
 								width={400}
                 alt={""}
-                className={`w-48 ${isOpaque ? "mix-blend-darken" : ""}`}
+                className={`w-full object-contain ${isOpaque ? "mix-blend-darken" : ""}`}
               />
             </li>
           );

@@ -2,6 +2,7 @@ import { Link, useLocation } from "@remix-run/react";
 import type { SiteConfigDoc } from "types/siteConfig";
 import { normalizePath } from "~/lib/getUrlPath";
 import { MenuItem } from "./menus/MenuItem";
+import { cn } from "~/lib/misc";
 
 export const Header = ({
   navigation,
@@ -16,17 +17,15 @@ export const Header = ({
     <header className={`container mx-auto px-8 relative`}>
       <div className="py-8 flex justify-between items-center gap-16">
         <Link to="/" prefetch="intent">
-          <img src="/letter-logo.svg" alt="logo" width={200} />
+          <img src="/letter-logo.svg" className="" alt="logo" width={200} />
         </Link>
         <nav className=" gap-8  hidden md:flex">
-          <ul className="flex gap-4">
+          <ul className={cn("flex gap-4 transition-colors duration-150", pathname !== "/" ? "text-black" : "text-white")}>
             {navigation.map((item) => {
-              const isActive =
-                pathname.startsWith(normalizePath(item?.item?.slug || "")) &&
-                item?.item?.slug !== "/";
+
 
               return (
-                <MenuItem key={item._key} isActive={isActive} navItem={item} />
+                <MenuItem key={item._key}  navItem={item} />
               );
             })}
           </ul>

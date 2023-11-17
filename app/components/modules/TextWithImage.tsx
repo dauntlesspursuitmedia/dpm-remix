@@ -3,6 +3,7 @@ import { PortableText } from "@portabletext/react";
 import { z } from "zod"
 import { SanityImage } from "../SanityImage";
 import groq from "groq";
+import { ImageQuery } from "~/lib/misc";
 
 export const textWithImagePropsZ = z.object({
 	_type: z.literal("textWithImage"),
@@ -19,14 +20,7 @@ export const TextWithImageQuery = groq`
 		imagePlacement,
 		text[],
 		image {
-			asset->{
-				_ref,
-				_id,
-				assetId,
-				metadata {
-					lqip,
-				}
-			}
+			${ImageQuery}
 		}
 	}
 `;
@@ -38,7 +32,7 @@ export const TextWithImage = ({_key,_type, text, image, imagePlacement}: TextWit
 				<div className={`${imagePlacement === "left" ? "order-2" : "order-1"}`}>
 					<PortableText value={text || []} />
 				</div>
-				<SanityImage image={image} className={`w-96 ${imagePlacement === "left" ? "order-1" : "order-2"} `} />
+				{/* <SanityImage image={image} className={`w-96 ${imagePlacement === "left" ? "order-1" : "order-2"} `} /> */}
 			</div>
 		</section>
 	)

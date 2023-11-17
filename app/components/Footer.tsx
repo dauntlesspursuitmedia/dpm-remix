@@ -1,5 +1,5 @@
 
-import { FacebookIcon } from "lucide-react";
+import { Copy, Copyright, FacebookIcon } from "lucide-react";
 // import Image from "next/image";
 // import Link from "next/link";
 import { MenuItem } from "./menus/MenuItem";
@@ -73,8 +73,8 @@ export const Footer = ({
             );
           })}
         </div>
-        <p className="text-xs mx-auto mb-8 text-center overflow-clip px-8">
-          &copy; 2019 -{" "}
+        <p className="text-xs mx-auto flex items-center mb-8 text-center overflow-clip px-8">
+          <Copyright className="w-4 mr-2 self-start" /> 2019 -{" "}
           {Intl.DateTimeFormat("en-US", { year: "numeric" }).format(Date.now())}
           . All rights reserved, Dauntless Pursuit Media.
         </p>

@@ -123,9 +123,7 @@ export default function App() {
               </>
             )}
           </Await>
-          {/* {location.pathname !== "/" && (
-              <Header navigation={data?.mainNagivation} />
-            )} */}
+
         </Suspense>
         <div className="container  mx-auto px-8">
           <div className="@container max-w-[740px]">
@@ -142,7 +140,7 @@ export default function App() {
             </p>
             <div className="flex justify-start gap-8 my-8">
               <Link
-                className="bg-yellow-500 px-4 py-2 rounded-lg inline-block"
+                className="bg-yellow-300 hover:bg-yellow-200 px-4 py-2 rounded-lg inline-block"
                 to="/contact/"
               >
                 Let's Talk!

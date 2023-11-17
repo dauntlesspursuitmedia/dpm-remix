@@ -9,7 +9,7 @@ export const projectZ = z.object({
 	title: z.string().nullish(),
 	slug: z.string().nullish(),
 	author: authorZ.nullish(),
-	image: imagePropsZ.nullish(),
+	mainImage: imagePropsZ.nullish(),
 	categories: z.array(categoryZ).nullish(),
 	publishedAt: z.string().datetime().nullish(),
 	body: PortableTextZ.nullish(),

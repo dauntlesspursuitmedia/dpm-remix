@@ -2,6 +2,7 @@ import urlBuilder from "@sanity/image-url";
 import { getImageDimensions } from "@sanity/asset-utils";
 import type { SanityImageSource } from "@sanity/asset-utils";
 import type { PortableTextComponentProps } from "@portabletext/react";
+import { projectDetails } from "~/lib/misc";
 
 type SanityImageAssetWithAlt = SanityImageSource & { alt?: string };
 
@@ -15,7 +16,7 @@ export function SanityImage(
 
     <img
       className={`not-prose h-auto w-full ${props.className}`}
-      src={urlBuilder(projectDetails())
+      src={urlBuilder(projectDetails)
         .image(value)
         .width(isInline ? 100 : props?.width ?? 800)
         .fit("max")
